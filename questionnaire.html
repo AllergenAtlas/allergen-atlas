@@ -1,79 +1,163 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allergen Atlas - Questionnaire</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-        img.logo { max-width: 150px; display: block; margin: auto; }
-        form { display: flex; flex-direction: column; }
-        label { margin-top: 10px; }
-        button { margin-top: 20px; padding: 10px; background: orange; border: none; color: white; font-size: 16px; cursor: pointer; }
-        .privacy-note { font-size: 0.9em; margin-top: 10px; }
-        .hidden { display: none; }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Allergen Atlas — Quick questions</title>
+<link rel="icon" href="logo.jpg">
+<style>
+:root{--bg:#fbfbfb;--card:#fff;--accent:#e06129;--muted:#6b6b6b;--maxw:820px}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#111}
+.container{max-width:var(--maxw);margin:36px auto;padding:28px;position:relative}
+.header{display:flex;align-items:center;justify-content:space-between;padding:20px calc((100% - var(--maxw))/2)}
+.brand{display:flex;gap:12px;align-items:center}
+.brand img{width:52px;height:52px;object-fit:contain;border-radius:10px}
+.card{background:var(--card);border-radius:14px;padding:26px;box-shadow:0 10px 30px rgba(10,10,10,0.05)}
+.h2{font-size:1.4rem;margin:0 0 8px}
+.question{margin-top:16px}
+.choices{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.checkbox{display:inline-flex;align-items:center;gap:10px;background:#fff;border:1px solid #eee;padding:10px 12px;border-radius:10px;cursor:pointer;min-width:180px}
+.checkbox input{margin:0}
+.checkbox.selected{border-color:rgba(224,97,41,0.16);box-shadow:0 8px 24px rgba(224,97,41,0.06)}
+textarea{width:100%;min-height:90px;padding:12px;border-radius:10px;border:1px solid #eaeaea;margin-top:8px}
+.button-row{display:flex;gap:12px;justify-content:flex-end;margin-top:18px}
+.button{padding:12px 16px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer}
+.button.primary{background:linear-gradient(180deg,var(--accent),#c65420);color:#fff;border:none;box-shadow:0 10px 30px rgba(224,97,41,0.12)}
+.small{color:var(--muted);font-size:0.92rem}
+</style>
 </head>
 <body>
-    <img src="logo.jpg" alt="Allergen Atlas Logo" class="logo">
-    <h1>Allergy Information</h1>
-    <form id="page2Form">
-        <p>Do you suffer with a food allergy or intolerance?</p>
-        <label><input type="radio" name="hasAllergy" value="Yes" required> Yes</label>
-        <label><input type="radio" name="hasAllergy" value="No" required> No</label>
+  <header class="header">
+    <div class="brand">
+      <img src="logo.jpg" alt="logo">
+      <div style="font-weight:600">Allergen Atlas</div>
+    </div>
+    <nav aria-hidden><a href="privacy.html" style="color:var(--muted);text-decoration:none">Privacy</a></nav>
+  </header>
 
-        <div id="allergyList">
-            <p>Which one(s)?</p>
-            <label><input type="checkbox" name="allergies" value="Peanuts"> Peanuts</label>
-            <label><input type="checkbox" name="allergies" value="Tree nuts"> Tree nuts (almonds, walnuts, cashews, etc.)</label>
-            <label><input type="checkbox" name="allergies" value="Milk"> Milk</label>
-            <label><input type="checkbox" name="allergies" value="Eggs"> Eggs</label>
-            <label><input type="checkbox" name="allergies" value="Fish"> Fish (salmon, tuna, cod, etc.)</label>
-            <label><input type="checkbox" name="allergies" value="Shellfish"> Shellfish (shrimp, crab, lobster)</label>
-            <label><input type="checkbox" name="allergies" value="Soy"> Soy</label>
-            <label><input type="checkbox" name="allergies" value="Wheat"> Wheat</label>
-            <label><input type="checkbox" id="somethingElse" name="allergies" value="Something else"> Something else</label>
-            <textarea id="somethingElseText" name="somethingElseText" maxlength="250" class="hidden" placeholder="Please specify (max 250 chars)"></textarea>
+  <main class="container">
+    <div class="card" id="card">
+      <h2 class="h2">A few quick questions</h2>
+      <p class="small">This helps us personalise your notifications and give restaurants the right info.</p>
+
+      <form id="page2Form">
+        <div class="question">
+          <label class="small"><strong>Do you suffer with a food allergy or intolerance?</strong></label>
+          <div class="choices" id="q1">
+            <label class="checkbox" data-value="Yes"><input type="radio" name="hasAllergy" value="Yes" required> Yes</label>
+            <label class="checkbox" data-value="No"><input type="radio" name="hasAllergy" value="No" required> No</label>
+          </div>
         </div>
 
-        <p>Do you carry an epi-pen?</p>
-        <label><input type="radio" name="epiPen" value="Yes" required> Yes</label>
-        <label><input type="radio" name="epiPen" value="No" required> No</label>
+        <div class="question" id="allergyBlock" style="display:none">
+          <label class="small"><strong>Which one(s)?</strong></label>
+          <div class="choices" id="q2">
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Peanuts"> Peanuts</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Tree nuts (almonds, walnuts, cashews, etc.)"> Tree nuts</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Milk"> Milk</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Eggs"> Eggs</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Fish (salmon, tuna, cod, etc.)"> Fish</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Shellfish (shrimp, crab, lobster)"> Shellfish</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Soy"> Soy</label>
+            <label class="checkbox"><input type="checkbox" name="allergies" value="Wheat"> Wheat</label>
+            <label class="checkbox" id="chk-other"><input type="checkbox" name="allergies" value="Something else"> Something else</label>
+          </div>
 
-        <button type="submit">Submit</button>
-    </form>
-    <p class="privacy-note"><a href="privacy.html" target="_blank">Privacy Policy</a></p>
+          <textarea id="otherText" maxlength="250" placeholder="If 'Something else', please specify (max 250 chars)" style="display:none"></textarea>
+        </div>
 
-    <script>
-        const somethingElseCheckbox = document.getElementById('somethingElse');
-        const somethingElseText = document.getElementById('somethingElseText');
-        somethingElseCheckbox.addEventListener('change', function() {
-            somethingElseText.classList.toggle('hidden', !this.checked);
-        });
+        <div class="question">
+            <label class="small"><strong>Do you carry an epi-pen?</strong></label>
+            <div class="choices" id="q3">
+              <label class="checkbox"><input type="radio" name="epiPen" value="Yes" required> Yes</label>
+              <label class="checkbox"><input type="radio" name="epiPen" value="No" required> No</label>
+            </div>
+        </div>
 
-        document.getElementById('page2Form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const page1Data = JSON.parse(localStorage.getItem('page1Data'));
-            const formData = new FormData(e.target);
-            const allergies = Array.from(document.querySelectorAll('input[name="allergies"]:checked')).map(el => el.value);
-            const allData = { ...page1Data,
-                hasAllergy: formData.get('hasAllergy'),
-                allergies: allergies.join(', '),
-                somethingElseText: formData.get('somethingElseText') || '',
-                epiPen: formData.get('epiPen')
-            };
-            
-            fetch('https://script.google.com/macros/s/AKfycbwHM8NLdiJyIli-yz78ProJ3JxWM3bM3kalhSlw1rB3ImMaeEC_L2yWVR-HJ8bn68ei6w/exec', {
-                method: 'POST',
-                mode: 'no-cors',
-                body: new URLSearchParams(allData)
-            }).then(() => {
-                window.location.href = 'thankyou.html';
-            }).catch(err => {
-                alert('Submission failed, please try again.');
-                console.error(err);
-            });
-        });
-    </script>
+        <div class="button-row">
+          <a href="index.html" class="button">Back</a>
+          <button class="button primary" type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+<script>
+// UI interactions
+document.querySelectorAll('.choices .checkbox').forEach(ch => {
+  ch.addEventListener('click', (e) => {
+    const input = ch.querySelector('input');
+    if(input.type === 'checkbox') {
+      input.checked = !input.checked;
+      ch.classList.toggle('selected', input.checked);
+    } else {
+      // radio: deselect siblings
+      const group = ch.parentElement;
+      group.querySelectorAll('.checkbox').forEach(s => s.classList.remove('selected'));
+      input.checked = true;
+      ch.classList.add('selected');
+    }
+    // show allergy block if Yes selected
+    const hasAllergyYes = document.querySelector('input[name="hasAllergy"][value="Yes"]');
+    if(hasAllergyYes && hasAllergyYes.checked) {
+      document.getElementById('allergyBlock').style.display = 'block';
+    } else {
+      document.getElementById('allergyBlock').style.display = 'none';
+    }
+    // show other text area
+    const otherChk = document.querySelector('#chk-other input');
+    document.getElementById('otherText').style.display = otherChk && otherChk.checked ? 'block' : 'none';
+  });
+});
+
+// submit handler
+document.getElementById('page2Form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const page1 = JSON.parse(localStorage.getItem('allergen_atlas_page1') || '{}');
+  if(!page1.email) {
+    alert('Your previous info was not found. Please complete the first form.');
+    window.location.href = 'index.html';
+    return;
+  }
+
+  const hasAllergy = document.querySelector('input[name="hasAllergy"]:checked')?.value || '';
+  if(!hasAllergy) { alert('Please answer whether you suffer with an allergy or intolerance.'); return; }
+
+  let allergies = Array.from(document.querySelectorAll('input[name="allergies"]:checked')).map(i => i.value);
+  const otherText = document.getElementById('otherText').value.trim();
+  if(allergies.includes('Something else') && otherText) {
+    allergies = allergies.filter(a => a !== 'Something else');
+    allergies.push('Something else: ' + otherText.slice(0,250));
+  }
+
+  const epiPen = document.querySelector('input[name="epiPen"]:checked')?.value || '';
+  if(!epiPen) { alert('Please indicate if you carry an epi-pen.'); return; }
+
+  const payload = {
+    timestamp: new Date().toISOString(),
+    firstName: page1.firstName,
+    lastName: page1.lastName,
+    dob: page1.dob,
+    email: page1.email,
+    hasAllergyOrIntolerance: hasAllergy,
+    allergyDetails: allergies.join('; ') || 'N/A',
+    carriesEpiPen: epiPen
+  };
+
+  try {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwHM8NLdiJyIli-yz78ProJ3JxWM3bM3kalhSlw1rB3ImMaeEC_L2yWVR-HJ8bn68ei6w/exec', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    localStorage.removeItem('allergen_atlas_page1');
+    window.location.href = 'thankyou.html';
+  } catch (err) {
+    console.error(err);
+    window.location.href = 'thankyou.html';
+  }
+});
+</script>
 </body>
 </html>

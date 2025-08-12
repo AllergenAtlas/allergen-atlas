@@ -1,37 +1,140 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allergen Atlas - Sign Up</title>
-    <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
-        img.logo { max-width: 150px; display: block; margin: auto; }
-        form { display: flex; flex-direction: column; }
-        label { margin-top: 10px; }
-        button { margin-top: 20px; padding: 10px; background: orange; border: none; color: white; font-size: 16px; cursor: pointer; }
-        .privacy-note { font-size: 0.9em; margin-top: 10px; }
-    </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Allergen Atlas — Early Access</title>
+<link rel="icon" href="logo.jpg">
+<style>
+:root{
+  --bg:#f6f7f8;
+  --card:#ffffff;
+  --accent:#e06129;
+  --muted:#6b6b6b;
+  --maxw:900px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:#111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.header{display:flex;align-items:center;justify-content:space-between;padding:28px calc((100% - var(--maxw))/2);gap:16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{width:56px;height:56px;object-fit:contain;border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.brand h1{font-size:1.1rem;margin:0;letter-spacing:0.2px;font-weight:600}
+.container{max-width:var(--maxw);margin:40px auto;padding:36px;position:relative}
+.hero{display:grid;grid-template-columns:1fr 420px;gap:36px;align-items:center}
+@media(max-width:880px){
+  .hero{grid-template-columns:1fr;}
+}
+.hero-left{padding:8px}
+.kicker{text-transform:uppercase;color:var(--muted);font-weight:600;font-size:0.78rem;letter-spacing:1px}
+.title{font-size:2rem;margin:12px 0 8px;line-height:1.02}
+.lead{color:var(--muted);font-size:1rem;max-width:44rem}
+.card{background:var(--card);border-radius:14px;padding:26px;box-shadow:0 10px 30px rgba(10,10,10,0.05);min-height:220px;display:flex;flex-direction:column;justify-content:center}
+input, button, textarea{font-family:inherit}
+.form-row{display:flex;gap:12px}
+.form-row .col{flex:1}
+input[type="text"], input[type="email"], input[type="date"]{
+  width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e7e7e7;background:#fff;font-size:1rem;
+  transition:box-shadow .18s, border-color .18s;
+}
+input:focus{outline:none;border-color:rgba(0,0,0,0.12);box-shadow:0 6px 18px rgba(14,14,14,0.04)}
+button.primary{display:inline-block;margin-top:12px;padding:12px 16px;border-radius:10px;border:none;background:linear-gradient(180deg,var(--accent),#c65420);color:#fff;font-weight:600;cursor:pointer;box-shadow:0 8px 20px rgba(224,97,41,0.14)}
+button.primary:hover{transform:translateY(-1px)}
+.small{font-size:0.9rem;color:var(--muted)}
+.footer{padding:28px calc((100% - var(--maxw))/2);text-align:center;color:var(--muted);font-size:0.9rem}
+.watermark{position:absolute;right:-60px;top:-60px;opacity:0.12;pointer-events:none;filter:grayscale(1);display:block;width:420px;height:420px;background-image:url('logo-watermark.png');background-size:contain;background-repeat:no-repeat;background-position:center}
+.socials{display:flex;gap:12px;align-items:center;justify-content:center;margin-top:16px}
+.socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,0.04);text-decoration:none;color:#111}
+</style>
 </head>
 <body>
-    <img src="logo.jpg" alt="Allergen Atlas Logo" class="logo">
-    <h1>Join Our Waiting List</h1>
-    <form id="page1Form">
-        <label>First Name:<input type="text" name="firstName" required></label>
-        <label>Last Name:<input type="text" name="lastName" required></label>
-        <label>Date of Birth:<input type="date" name="dob" required></label>
-        <label>Email:<input type="email" name="email" required></label>
-        <button type="submit">Next</button>
-    </form>
-    <p class="privacy-note"><a href="privacy.html" target="_blank">Privacy Policy</a></p>
+  <header class="header">
+    <div class="brand">
+      <img src="logo.jpg" alt="Allergen Atlas logo">
+      <h1>Allergen Atlas</h1>
+    </div>
+    <nav aria-hidden>
+      <a href="privacy.html" style="color:var(--muted);text-decoration:none;font-weight:600">Privacy</a>
+    </nav>
+  </header>
 
-    <script>
-        document.getElementById('page1Form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const data = Object.fromEntries(new FormData(e.target).entries());
-            localStorage.setItem('page1Data', JSON.stringify(data));
-            window.location.href = 'questionnaire.html';
-        });
-    </script>
+  <main class="container">
+    <div class="watermark" aria-hidden></div>
+    <section class="hero" role="region" aria-label="Sign up">
+      <div class="hero-left">
+        <div class="kicker">Early access</div>
+        <h2 class="title">Make dining out safer for people with allergies</h2>
+        <p class="lead">Allergen Atlas helps you check how restaurants handle allergens and decide if it’s safe to eat out. Sign up for the early access waiting list.</p>
+        <div class="socials" aria-hidden>
+          <a href="https://instagram.com/yourhandle" target="_blank">IG</a>
+          <a href="https://tiktok.com/@yourhandle" target="_blank">TT</a>
+          <a href="https://x.com/yourhandle" target="_blank">X</a>
+          <a href="https://linkedin.com/in/yourhandle" target="_blank">IN</a>
+        </div>
+      </div>
+
+      <aside class="card" aria-label="Sign up form">
+        <form id="page1Form" autocomplete="off">
+          <div class="form-row">
+            <div class="col">
+              <label class="small">First name</label>
+              <input name="firstName" type="text" required placeholder="First name">
+            </div>
+            <div class="col">
+              <label class="small">Last name</label>
+              <input name="lastName" type="text" required placeholder="Last name">
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:12px">
+            <div class="col">
+              <label class="small">Date of birth</label>
+              <input name="dob" type="date" required>
+            </div>
+            <div class="col">
+              <label class="small">Email address</label>
+              <input name="email" type="email" required placeholder="you@domain.com">
+            </div>
+          </div>
+
+          <div style="margin-top:14px">
+            <div class="small">We’ll use your email only to send product updates. You can export data to Excel anytime.</div>
+            <button class="primary" type="submit">Continue</button>
+          </div>
+        </form>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © Allergen Atlas — <a href="privacy.html" style="color:inherit;text-decoration:underline">Privacy policy</a>
+  </footer>
+
+<script>
+document.getElementById('page1Form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const data = {
+    firstName: fd.get('firstName')?.trim(),
+    lastName: fd.get('lastName')?.trim(),
+    dob: fd.get('dob'),
+    email: fd.get('email')?.trim()
+  };
+  if(!data.firstName || !data.lastName || !data.email || !data.dob){
+    alert('Please complete all fields.');
+    return;
+  }
+  localStorage.setItem('allergen_atlas_page1', JSON.stringify(data));
+  // smooth navigation
+  window.location.href = 'questionnaire.html';
+});
+</script>
 </body>
 </html>
